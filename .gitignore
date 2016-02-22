@@ -1,6 +1,9 @@
 # Manually Added
 .classpath
+.gradle/
 .project
+bin/
+build/
 
 # Windows image file caches
 Thumbs.db
