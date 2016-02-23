@@ -1,5 +1,26 @@
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'eclipse'
 
 sourceSets.main.java.srcDirs = ['src']
 mainClassName = 'hello.HelloWorld'
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    baseName = 'java-examples'
+    version =  '0.1.0'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile 'com.google.guava:guava:19.0'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.11'
+}
