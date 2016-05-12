@@ -20,6 +20,8 @@ public class ExecutorDemo {
             list.add(future);
         }
 		
+		System.out.println("Submission Done.");
+		
         for(Future<String> fut : list){
             try {
                 System.out.println(fut.get());
