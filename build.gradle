@@ -19,6 +19,7 @@ targetCompatibility = 1.8
 
 dependencies {
     compile 'com.google.guava:guava:19.0'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.4'
 }
 
 task wrapper(type: Wrapper) {
