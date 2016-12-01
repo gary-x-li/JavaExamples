@@ -1,14 +1,23 @@
 package programming.datastructure;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 // https://www.hackerrank.com/challenges/swap-nodes-algo
 public class SwapNodes {
     
-    private static class Node {
-        Node left;
-        Node right;
-        int value;
+    static class Node {
+        private Node left;
+        private Node right;
+        private int value;
+        private int depth;
+        
+        public Node(int value) {
+            this.value = value;
+        }
         
         public Node getLeft() {
             return left;
@@ -25,43 +34,76 @@ public class SwapNodes {
         public int getValue() {
             return value;
         }
-        public void setValue(int value) {
-            this.value = value;
+        public int getDepth() {
+            return depth;
         }
+        public void setDepth(int depth) {
+            this.depth = depth;
+        }
+        
     }
 
-    private static class BinaryTree {
-        private Node root;
+    static class BinaryTree {
+        private List<Node> nodes = new ArrayList<>();
+        private Map<Integer, List<Node>> nodesByDepth = new HashMap<>();
         
-        public BinaryTree(Node root) {
-            this.root = root;
+        public BinaryTree(int numNodes) {
+            for (int i = 0; i < numNodes; i++) {
+                nodes.add(new Node(i+1));
+                nodesByDepth.put(i+1, new ArrayList<Node>());
+            }
+        }
+        
+        public Node getNode(int nodeValue) {
+            return nodes.get(nodeValue-1);
+        }
+        
+        public List<Node> getNodesAtDepth(int depth) {
+            return nodesByDepth.get(depth);
         }
     }
     
-    public static void main(String[] args) {
-        Node root = new Node();
-        root.setValue(1);
-        BinaryTree tree = new BinaryTree(root);
+    static void inOrderTraversal(Node root) {
+        if (root == null) {
+            return;
+        }
         
+        inOrderTraversal(root.getLeft());
+        
+        System.out.print(root.getValue() + " ");
+        
+        inOrderTraversal(root.getRight());
+    }
+    
+    static void swap() {
+        
+    }
+    
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int numNodes = scanner.nextInt();
+        BinaryTree tree = new BinaryTree(numNodes);
         
-        for (int i = 0; i <= numNodes; i++) {
+        for (int i = 0; i < numNodes; i++) {
+            Node node = tree.getNode(i+1);
+            node.setDepth(i+1);
+            tree.getNodesAtDepth(i+1).add(node);
+            
             int leftVal = scanner.nextInt();
             int rightVal = scanner.nextInt();
             
             if (leftVal != -1) {
-                Node leftNode = new Node();
-                leftNode.setValue(leftVal);
-                root.setLeft(leftNode);
+                node.setLeft(tree.getNode(leftVal));
             }
             
             if (rightVal != -1) {
-                Node rightNode = new Node();
-                rightNode.setValue(rightVal);
-                root.setRight(rightNode);
+                node.setRight(tree.getNode(rightVal));
             }
         }
+        
+        scanner.close();
+        
+        inOrderTraversal(tree.getNode(1));
     }
 
 }
