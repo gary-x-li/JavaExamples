@@ -41,6 +41,10 @@ public class SwapNodes {
             this.depth = depth;
         }
         
+        public String toString() {
+            return "Node " + value;
+        }
+        
     }
 
     static class BinaryTree {
@@ -50,16 +54,29 @@ public class SwapNodes {
         public BinaryTree(int numNodes) {
             for (int i = 0; i < numNodes; i++) {
                 nodes.add(new Node(i+1));
-                nodesByDepth.put(i+1, new ArrayList<Node>());
             }
+            nodes.get(0).setDepth(1);
+            addNodeToDepth(nodes.get(0), 1);
         }
         
         public Node getNode(int nodeValue) {
             return nodes.get(nodeValue-1);
         }
         
+        public void addNodeToDepth(Node node, int depth) {
+            if (nodesByDepth.get(depth) == null) {
+                nodesByDepth.put(depth, new ArrayList<Node>());
+            } 
+            
+            nodesByDepth.get(depth).add(node);
+        }
+        
         public List<Node> getNodesAtDepth(int depth) {
             return nodesByDepth.get(depth);
+        }
+        
+        public int getDepth() {
+            return nodesByDepth.size();
         }
     }
     
@@ -75,8 +92,15 @@ public class SwapNodes {
         inOrderTraversal(root.getRight());
     }
     
-    static void swap() {
+    static void swap(BinaryTree tree, int depth) {
+        List<Node> nodes = tree.getNodesAtDepth(depth);
         
+        for (Node node : nodes) {
+            Node left = node.getLeft();
+            Node right = node.getRight();
+            node.setLeft(right);
+            node.setRight(left);
+        }
     }
     
     public static void main(String[] args) {
@@ -86,24 +110,46 @@ public class SwapNodes {
         
         for (int i = 0; i < numNodes; i++) {
             Node node = tree.getNode(i+1);
-            node.setDepth(i+1);
-            tree.getNodesAtDepth(i+1).add(node);
             
             int leftVal = scanner.nextInt();
             int rightVal = scanner.nextInt();
             
             if (leftVal != -1) {
-                node.setLeft(tree.getNode(leftVal));
+                Node leftNode = tree.getNode(leftVal);
+                node.setLeft(leftNode);
+                leftNode.setDepth(node.getDepth() + 1);
+                tree.addNodeToDepth(leftNode, leftNode.getDepth());
             }
             
             if (rightVal != -1) {
-                node.setRight(tree.getNode(rightVal));
+                Node rightNode = tree.getNode(rightVal);
+                node.setRight(rightNode);
+                rightNode.setDepth(node.getDepth() + 1);
+                tree.addNodeToDepth(rightNode, rightNode.getDepth());
+            }
+        }
+        
+        System.out.println("Starting with tree of depth " + tree.getDepth() + ": ");
+        inOrderTraversal(tree.getNode(1));
+        System.out.println();
+        
+        int numSwap = scanner.nextInt();
+        
+        for (int i = 0; i < numSwap; i++) {
+            int k = scanner.nextInt();
+            int swapNum = i+1;
+            
+            for (int j = k; j <= tree.getDepth(); j += j) {
+                swap(tree, j);
+                System.out.println("After swap #" + swapNum + " with h=" + j +": ");
+                inOrderTraversal(tree.getNode(1));
+                System.out.println();
             }
         }
         
         scanner.close();
         
-        inOrderTraversal(tree.getNode(1));
+        
     }
 
 }
