@@ -129,22 +129,17 @@ public class SwapNodes {
             }
         }
         
-        System.out.println("Starting with tree of depth " + tree.getDepth() + ": ");
-        inOrderTraversal(tree.getNode(1));
-        System.out.println();
-        
         int numSwap = scanner.nextInt();
         
         for (int i = 0; i < numSwap; i++) {
             int k = scanner.nextInt();
-            int swapNum = i+1;
             
-            for (int j = k; j <= tree.getDepth(); j += j) {
+            for (int j = k; j <= tree.getDepth(); j += k) {
                 swap(tree, j);
-                System.out.println("After swap #" + swapNum + " with h=" + j +": ");
-                inOrderTraversal(tree.getNode(1));
-                System.out.println();
             }
+            
+            inOrderTraversal(tree.getNode(1));
+            System.out.println();
         }
         
         scanner.close();
