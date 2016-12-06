@@ -8,6 +8,10 @@ import java.util.Scanner;
 public class BalancedBrackets {
     
     static boolean isBalanced(String brackets) {
+        if (brackets.length() % 2 != 0) {
+            return false;
+        }
+        
         Deque<String> stack = new ArrayDeque<String>();
         
         for (int i = 0; i < brackets.length(); i++) {
@@ -15,6 +19,10 @@ public class BalancedBrackets {
             if (currentBracket.equals("{") || currentBracket.equals("[") || currentBracket.equals("(")) {
                 stack.push(currentBracket);
             } else {
+                if (stack.peek() == null) {
+                    return false;
+                }
+                
                 String potentialMatchingBracket = stack.pop();
                 if (currentBracket.equals("}") && !potentialMatchingBracket.equals("{")) {
                     return false;
@@ -26,8 +34,7 @@ public class BalancedBrackets {
             }
         }
         
-        
-        return true;
+        return stack.isEmpty();
     }
 
     public static void main(String[] args) {
