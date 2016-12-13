@@ -1,7 +1,10 @@
 package programming.datastructure;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
+import java.util.Scanner;
 
 // https://www.hackerrank.com/challenges/waiter
 public class Waiter {
@@ -33,7 +36,29 @@ public class Waiter {
     }
 
     public static void main(String[] args) {
-        System.out.println(primeNumbersUpTo(100));
+        Scanner scanner = new Scanner(System.in);
+        int numPlates = scanner.nextInt();
+        int numIterations = scanner.nextInt();
+        Deque<Integer> a0 = new ArrayDeque<>();
+        
+        for (int i = 0; i < numPlates; i++) {
+            a0.push(scanner.nextInt());
+        }
+        
+        List<Integer> primeNumbers = primeNumbersUpTo(numIterations);
+        
+        for (int i = 1; i <= numIterations; i++) {
+            Deque<Integer> b = new ArrayDeque<>();
+            for (Integer num : a0) {
+                if (num % primeNumbers.get(i-1) == 0) {
+                    b.push(num);
+                } else {
+                    
+                }
+            }
+        }
+        
+        scanner.close();
     }
 
 }
