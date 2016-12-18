@@ -6,6 +6,13 @@
 bin/
 build/
 
+# IntelliJ IDEA
+.idea/
+out/
+*.iml
+*.ipr
+*.iws
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
