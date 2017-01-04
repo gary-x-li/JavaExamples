@@ -3,6 +3,7 @@ package hello;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class HelloWorld {
 
@@ -29,7 +30,7 @@ public class HelloWorld {
         
         pairs.forEach(a -> System.out.println(a[0] + " " + a[1]));
         
-        
+        IntStream.of(1,2).min();
     }
 
 }
