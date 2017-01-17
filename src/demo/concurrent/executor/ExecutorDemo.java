@@ -12,6 +12,7 @@ public class ExecutorDemo {
 
     public static void main(String[] args) {
         ExecutorService pool = Executors.newFixedThreadPool(3);
+        //ExecutorService pool = Executors.newCachedThreadPool();
         
         List<Future<String>> list = new ArrayList<>();
         for(int i=0; i< 10; i++){
