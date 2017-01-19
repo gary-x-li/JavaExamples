@@ -79,58 +79,45 @@ public class SelfBalancingTree {
     }
     
 
-    
+    enum Balance {
+        LEFT_LEFT, LEFT_RIGHT, RIGHT_LEFT, RIGHT_RIGHT
+    } 
 
     static void reBalance(Node newNode, Deque<Node> path) {
-//        if (grandParentLeft == true && parentLeft == true) {
-//            grandParent.left = parent.right;
-//            parent.right = grandParent;
-//            grandParent.ht -= 1;
-//            parent.ht += 1;
-//            
-//            if (greatGrand != null) {
-//                if (greatGrandLeft) {
-//                    greatGrand.left = parent;
-//                } else {
-//                    greatGrand.right = parent;
-//                }
-//            }
-//            
-//            return;
-//        } else if (grandParentLeft == true && parentLeft == false) {
-//            Node current = parent.right;
-//            parent.right = current.left;
-//            current.left = parent;
-//            grandParent.left = current;
-//            parent.ht -= 1;
-//            current.ht += 1;
-//            
-//            reBalance(greatGrand, grandParent, current, greatGrandLeft, true, true);
-//        } else if (grandParentLeft == false && parentLeft == true) {
-//            Node current = parent.left;
-//            parent.left = current.right;
-//            current.right = parent;
-//            grandParent.right = current;
-//            parent.ht -= 1;
-//            current.ht += 1;
-//            
-//            reBalance(greatGrand, grandParent, current, greatGrandLeft, false, false);
-//        } else {
-//            grandParent.right = parent.left;
-//            parent.left = grandParent;
-//            grandParent.ht -= 1;
-//            parent.ht += 1;
-//            
-//            if (greatGrand != null) {
-//               if (greatGrandLeft) {
-//                    greatGrand.left = parent;
-//                } else {
-//                    greatGrand.right = parent;
-//                }
-//            }
-//            
-//            return;
-//        }
+        Balance balance = null;
+        
+        Node parent = path.pop();
+        Node grandParent = path.pop();
+        Node greatGrand = path.isEmpty() ? null : path.pop();
+        
+        if (grandParent.left.equals(parent)) {
+            if (parent.left.equals(newNode)) {
+                balance = Balance.LEFT_LEFT;
+            } else {
+                balance = Balance.LEFT_RIGHT;
+            }
+        } else {
+            if (parent.left.equals(newNode)) {
+                balance = Balance.RIGHT_LEFT;
+            } else {
+                balance = Balance.RIGHT_RIGHT;
+            }
+        }
+        
+        rotate(newNode, parent, grandParent, greatGrand, balance);
+    }
+    
+    static void rotate(Node newNode, Node parent, Node grandParent, Node greatGrand, Balance balance) {
+        if (balance.equals(Balance.LEFT_LEFT)) {
+            rightRotate(grandParent, parent, greatGrand);
+        } else if (balance.equals(Balance.LEFT_RIGHT)) {
+            leftRotate(parent, newNode, grandParent);
+            rotate(parent, newNode, grandParent, greatGrand, Balance.LEFT_LEFT);
+        } else if (balance.equals(Balance.RIGHT_LEFT)) {
+            
+        } else {
+            
+        }
     }
 
     static Node insert(Node root, int val)
