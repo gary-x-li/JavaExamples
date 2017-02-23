@@ -21,6 +21,7 @@ targetCompatibility = 1.8
 dependencies {
     compile 'com.google.guava:guava:19.0'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.4'
+    compile 'org.eclipse.jetty:jetty-servlet:8.1.0.v20120127'
 }
 
 task wrapper(type: Wrapper) {
