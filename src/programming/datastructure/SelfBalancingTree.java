@@ -105,6 +105,8 @@ public class SelfBalancingTree {
         }
         
         rotate(newNode, parent, grandParent, greatGrand, balance);
+        
+        // TODO: Update height for nodes based on each Balance case
     }
     
     static void rotate(Node newNode, Node parent, Node grandParent, Node greatGrand, Balance balance) {
@@ -114,9 +116,10 @@ public class SelfBalancingTree {
             leftRotate(parent, newNode, grandParent);
             rotate(parent, newNode, grandParent, greatGrand, Balance.LEFT_LEFT);
         } else if (balance.equals(Balance.RIGHT_LEFT)) {
-            
+            rightRotate(parent, newNode, grandParent);
+            rotate(parent, newNode, grandParent, greatGrand, Balance.RIGHT_RIGHT);
         } else {
-            
+            leftRotate(grandParent, parent, greatGrand);
         }
     }
 
@@ -148,7 +151,6 @@ public class SelfBalancingTree {
             } else {
                 parent.right = newNode;
             }
-            
             
             path.stream().forEach(n -> updateHeight(n));
             
