@@ -8,6 +8,7 @@ mainClassName = 'hello.HelloWorld'
 
 repositories {
     mavenCentral()
+    maven { url "http://www.datanucleus.org/downloads/maven2/" }
 }
 
 jar {
@@ -21,6 +22,7 @@ targetCompatibility = 1.8
 dependencies {
     compile 'com.google.guava:guava:19.0'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.4'
+    compile 'com.oracle.coherence:coherence:3.7.1'
     compile 'org.eclipse.jetty:jetty-servlet:8.1.0.v20120127'
 }
 
