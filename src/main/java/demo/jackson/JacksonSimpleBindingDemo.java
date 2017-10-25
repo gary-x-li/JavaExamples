@@ -13,7 +13,7 @@ public class JacksonSimpleBindingDemo {
         
         // JSON to Object
         String basePath = new File("").getAbsolutePath();
-        String jsonFilePath = basePath.concat("/src/demo/jackson/people.json");
+        String jsonFilePath = basePath.concat("/src/main/java/demo/jackson/people.json");
         System.out.println(jsonFilePath);
         
         ObjectMapper mapper = new ObjectMapper();
