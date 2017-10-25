@@ -16,7 +16,7 @@ import org.eclipse.jetty.util.ssl.SslContextFactory;
 
 public class MinimalServlets
 {
-    private static final String KEYSTORE_LOCATION = "resources\\jetty.jks";
+    private static final String KEYSTORE_LOCATION = "src\\main\\resources\\jetty.jks";
     private static final String KEYSTORE_PASS = "password";
     
     public static void main( String[] args ) throws Exception
