@@ -3,8 +3,8 @@ apply plugin: 'application'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 
-//sourceSets.main.java.srcDirs = ['src/main/java']
-//mainClassName = 'hello.HelloWorld'
+sourceSets.main.java.srcDirs = ['src/main/java']
+mainClassName = 'hello.HelloWorld'
 
 repositories {
     mavenCentral()
