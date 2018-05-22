@@ -20,7 +20,7 @@ public class SynchronizationDemo {
             } catch (InterruptedException e) {
             }
             this.amount = amount;
-            System.out.println(this.transName + " " + this.amount + " " + this.toString());
+            System.out.println(this.transName + " " + this.amount);
         }
     }
 

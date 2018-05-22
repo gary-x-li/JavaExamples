@@ -1,84 +1,87 @@
 package demo.concurrent.thread;
 
+import java.util.function.Consumer;
+
 public class WaitNotifyDemo {
     public static void main(String[] args) {
         Shared s = new Shared();
         new Producer(s).start();
         new Consumer(s).start();
     }
-}
 
-class Shared {
-    private char c = '\u0000';
-    private boolean writeable = true;
+    static class Shared {
+        private char c = '\u0000';
+        private boolean writeable = true;
 
-    synchronized void setSharedChar(char c) {
-        while (!writeable) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-            }
-        }
-
-        this.c = c;
-        writeable = false;
-        notify();
-    }
-
-    synchronized char getSharedChar() {
-        while (writeable) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-            }
-        }
-
-        writeable = true;
-        notify();
-
-        return c;
-    }
-}
-
-class Producer extends Thread {
-    private Shared s;
-
-    Producer(Shared s) {
-        this.s = s;
-    }
-
-    public void run() {
-        for (char ch = 'A'; ch <= 'Z'; ch++) {
-            try {
-                Thread.sleep((int) (Math.random() * 1000));
-            } catch (InterruptedException e) {
+        synchronized void setSharedChar(char c) {
+            while (!writeable) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                }
             }
 
-            s.setSharedChar(ch);
-            System.out.println(ch + " produced by producer.");
+            this.c = c;
+            writeable = false;
+            notify();
         }
-    }
-}
 
-class Consumer extends Thread {
-    private Shared s;
-
-    Consumer(Shared s) {
-        this.s = s;
-    }
-
-    public void run() {
-        char ch;
-
-        do {
-            try {
-                Thread.sleep((int) (Math.random() * 1000));
-            } catch (InterruptedException e) {
+        synchronized char getSharedChar() {
+            while (writeable) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                }
             }
 
-            ch = s.getSharedChar();
-            System.out.println(ch + " consumed by consumer.");
+            writeable = true;
+            notify();
+
+            return c;
         }
-        while (ch != 'Z');
+    }
+
+    static class Producer extends Thread {
+        private Shared s;
+
+        Producer(Shared s) {
+            this.s = s;
+        }
+
+        public void run() {
+            for (char ch = 'A'; ch <= 'Z'; ch++) {
+                try {
+                    Thread.sleep((int) (Math.random() * 1000));
+                } catch (InterruptedException e) {
+                }
+
+                s.setSharedChar(ch);
+                System.out.println(ch + " produced by producer.");
+            }
+        }
+    }
+
+    static class Consumer extends Thread {
+        private Shared s;
+
+        Consumer(Shared s) {
+            this.s = s;
+        }
+
+        public void run() {
+            char ch;
+
+            do {
+                try {
+                    Thread.sleep((int) (Math.random() * 1000));
+                } catch (InterruptedException e) {
+                }
+
+                ch = s.getSharedChar();
+                System.out.println(ch + " consumed by consumer.");
+            }
+            while (ch != 'Z');
+        }
     }
 }
+

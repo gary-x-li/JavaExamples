@@ -11,11 +11,12 @@ class UserDaemonThreadDemo {
         } catch (InterruptedException e) {
         }
     }
-}
 
-class MyThread extends Thread {
-    public void run() {
-        System.out.println("Daemon is " + isDaemon());
-        while (true) ;
+    static class MyThread extends Thread {
+        public void run() {
+            System.out.println("Daemon is " + isDaemon());
+            while (true) ;
+        }
     }
 }
+
