@@ -3,15 +3,17 @@ package demo.concurrent.thread;
 public class NeedForSynchronizationDemo {
     public static void main(String[] args) {
         FinTrans ft = new FinTrans();
+        FinTrans ft2 = new FinTrans();
         TransThread tt1 = new TransThread(ft, "Deposit Thread");
-        TransThread tt2 = new TransThread(new FinTrans(), "Withdrawal Thread");
+        // No synchronization needed if pass ft2 instead
+        TransThread tt2 = new TransThread(ft, "Withdrawal Thread");
         tt1.start();
         tt2.start();
     }
 
     static class FinTrans {
-        public static String transName;
-        public static double amount;
+        public String transName;
+        public double amount;
     }
 
     static class TransThread extends Thread {
@@ -32,7 +34,7 @@ public class NeedForSynchronizationDemo {
                     } catch (InterruptedException e) {
                     }
                     ft.amount = 2000.0;
-                    System.out.println(ft.transName + " " + ft.amount + " " + ft.toString());
+                    System.out.println(ft.transName + " " + ft.amount);
                     // End of deposit thread's critical code section
                 } else {
                     // Start of withdrawal thread's critical code section
@@ -42,12 +44,13 @@ public class NeedForSynchronizationDemo {
                     } catch (InterruptedException e) {
                     }
                     ft.amount = 250.0;
-                    System.out.println(ft.transName + " " + ft.amount + " " + ft.toString());
+                    System.out.println(ft.transName + " " + ft.amount);
                     // End of withdrawal thread's critical code section
                 }
             }
         }
     }
-
 }
+
+
 
