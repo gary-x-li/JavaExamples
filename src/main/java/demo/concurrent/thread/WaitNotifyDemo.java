@@ -1,7 +1,5 @@
 package demo.concurrent.thread;
 
-import java.util.function.Consumer;
-
 public class WaitNotifyDemo {
     public static void main(String[] args) {
         Shared s = new Shared();
